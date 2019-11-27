@@ -1,4 +1,5 @@
-﻿using GraphQL.Types;
+﻿using GeoCoordinatePortable;
+using GraphQL.Types;
 using LocationFinder.Api.GraphQLTypes;
 using LocationFinder.Api.Models;
 using Microsoft.EntityFrameworkCore;
@@ -43,7 +44,7 @@ namespace LocationFinder.Api.GraphQLQuery
               {
                   var id = context.GetArgument<long>("id");
                   var person = db.Persons
-                    .Include(a => a.PointLocation)                    
+                    .Include(a => a.PointLocation)
                     .FirstOrDefault(i => i.Id == id);
                   return person;
               });
@@ -55,7 +56,35 @@ namespace LocationFinder.Api.GraphQLQuery
                   var organizations = db.Persons.Include(p => p.PointLocation);
                   return organizations;
               });
+
+            Field<ListGraphType<PersonType>>(
+                "nearestLocations",
+                arguments: new QueryArguments(
+                     new QueryArgument<FloatGraphType> { Name = "latitude", Description = "The ID of the person." },
+                     new QueryArgument<FloatGraphType> { Name = "longtitude", Description = "The ID of the person." },
+                     new QueryArgument<IdGraphType> { Name = "organizationId", Description = "The ID of the person." }
+                     ),
+                resolve: context =>
+                {
+                    var pointLat = context.GetArgument<double>("latitude");
+                    var pointLong = context.GetArgument<double>("longtitude");
+                    var orgId = context.GetArgument<long>("organizationId");
+
+                    var coord = new GeoCoordinate(pointLat, pointLong);
+
+                    var a= db.Persons.Where(o=> o.OrganizationId == orgId)
+                            .Select(x => new { locations = new GeoCoordinate { Latitude = x.PointLocation.Latitude, Longitude = x.PointLocation.Longtitude }, person = x })
+                            .OrderBy(x => x.locations.GetDistanceTo(coord))
+                            .Take(3)
+                            .Select( y => y.person)
+                            .AsEnumerable();
+
+                    return a;
+
+                }
+                );
         }
+
 
     }
 }
