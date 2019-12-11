@@ -15,5 +15,7 @@ namespace LocationFinder.Api.Models
         public DbSet<Organization> Organizations{ get; set; }
         public DbSet<Person> Persons{ get; set; }
         public DbSet<PointLocation> PointLocations { get; set; }
+        public DbSet<DeviceInformation> DeviceInformations { get; set; }
+        public DbSet<OrganizationDevice> GetOrganizationDevices { get; set; }
     }
 }

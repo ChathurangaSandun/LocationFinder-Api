@@ -3,39 +3,22 @@ using LocationFinder.Api.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LocationFinder.Api.Migrations
 {
     [DbContext(typeof(NearmeDataContext))]
-    partial class NearmeDataContextModelSnapshot : ModelSnapshot
+    [Migration("20191129115239_addimageurl")]
+    partial class addimageurl
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "2.2.6-servicing-10079")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("LocationFinder.Api.Models.DeviceInformation", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("Model");
-
-                    b.Property<string>("OsModel");
-
-                    b.Property<string>("Osversion");
-
-                    b.Property<string>("Uuid");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("nearme.deviceinformation");
-                });
 
             modelBuilder.Entity("LocationFinder.Api.Models.Organization", b =>
                 {
@@ -50,25 +33,6 @@ namespace LocationFinder.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("nearme.organization");
-                });
-
-            modelBuilder.Entity("LocationFinder.Api.Models.OrganizationDevice", b =>
-                {
-                    b.Property<long>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<long>("DeviceId");
-
-                    b.Property<long>("OrganizationId");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("DeviceId");
-
-                    b.HasIndex("OrganizationId");
-
-                    b.ToTable("nearme.organizationdevice");
                 });
 
             modelBuilder.Entity("LocationFinder.Api.Models.Person", b =>
@@ -112,19 +76,6 @@ namespace LocationFinder.Api.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("nearme.pointlocation");
-                });
-
-            modelBuilder.Entity("LocationFinder.Api.Models.OrganizationDevice", b =>
-                {
-                    b.HasOne("LocationFinder.Api.Models.DeviceInformation", "DeviceInformation")
-                        .WithMany()
-                        .HasForeignKey("DeviceId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("LocationFinder.Api.Models.Organization", "Organization")
-                        .WithMany()
-                        .HasForeignKey("OrganizationId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("LocationFinder.Api.Models.Person", b =>

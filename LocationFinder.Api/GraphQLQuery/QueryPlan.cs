@@ -63,7 +63,7 @@ namespace LocationFinder.Api.GraphQLQuery
                 arguments: new QueryArguments(
                      new QueryArgument<FloatGraphType> { Name = "latitude", Description = "The ID of the person." },
                      new QueryArgument<FloatGraphType> { Name = "longtitude", Description = "The ID of the person." },
-                     new QueryArgument<IdGraphType> { Name = "organizationId", Description = "The ID of the person." }                     
+                     new QueryArgument<IdGraphType> { Name = "organizationId", Description = "The ID of the person." }
                      ),
                 resolve: context =>
                 {
@@ -73,8 +73,8 @@ namespace LocationFinder.Api.GraphQLQuery
 
                     var coord = new GeoCoordinate(pointLat, pointLong);
 
-                    var list= db.Persons
-                            .Where(o=> o.OrganizationId == orgId)
+                    var list = db.Persons
+                            .Where(o => o.OrganizationId == orgId)
                             .Select(x => new { locations = new GeoCoordinate { Latitude = x.PointLocation.Latitude, Longitude = x.PointLocation.Longtitude }, person = x })
                             .OrderBy(x => x.locations.GetDistanceTo(coord))
                             .Take(3)

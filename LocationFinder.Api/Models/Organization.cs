@@ -12,7 +12,7 @@ namespace LocationFinder.Api.Models
         public string Name { get; set; }
         public string Details { get; set; }
 
-        public  ICollection<Person> Persons { get; set; }
+        public  ICollection<Person> Persons { get; set; }        
 
     }
 }

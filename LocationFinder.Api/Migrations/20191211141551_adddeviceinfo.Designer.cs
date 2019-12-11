@@ -3,14 +3,16 @@ using LocationFinder.Api.Models;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace LocationFinder.Api.Migrations
 {
     [DbContext(typeof(NearmeDataContext))]
-    partial class NearmeDataContextModelSnapshot : ModelSnapshot
+    [Migration("20191211141551_adddeviceinfo")]
+    partial class adddeviceinfo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
