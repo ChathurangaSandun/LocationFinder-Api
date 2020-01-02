@@ -77,7 +77,7 @@ namespace LocationFinder.Api.GraphQLQuery
                             .Where(o => o.OrganizationId == orgId)
                             .Select(x => new { locations = new GeoCoordinate { Latitude = x.PointLocation.Latitude, Longitude = x.PointLocation.Longtitude }, person = x })
                             .OrderBy(x => x.locations.GetDistanceTo(coord))
-                            .Take(3)
+                            .Take(5)
                             .Select(x => x.person).Include(y => y.PointLocation).Include(o => o.Organization)
                             .AsEnumerable();
 
@@ -85,6 +85,19 @@ namespace LocationFinder.Api.GraphQLQuery
 
                 }
                 );
+
+            //Field<DeviceInformationType>(
+            //     "createDeviceInformation",
+            //     arguments: new QueryArguments(
+            //       new QueryArgument<NonNullGraphType<DeviceInformationType>> { Name = "information" }
+            //     ),
+            //     resolve: context =>
+            //     {
+            //         var information = context.GetArgument<DeviceInformation>("information");
+            //         var a = db.Add(information);
+            //         db.SaveChangesAsync();
+            //         return a;
+            //     });
         }
 
 
