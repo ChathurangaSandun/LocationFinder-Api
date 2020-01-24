@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LocationFinder.Api.Models
 {
@@ -12,7 +8,7 @@ namespace LocationFinder.Api.Models
         //public Guid MarkGuid { get; set; }
         public float Latitude { get; set; }
         public float Longtitude { get; set; }
-       
-        public  Person Person { get; set; }
+
+        public Person Person { get; set; }
     }
 }

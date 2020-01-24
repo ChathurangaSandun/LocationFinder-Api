@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GraphQL;
+﻿using GraphQL;
 using GraphQL.Types;
 using LocationFinder.Api.GraphQLQuery;
 using LocationFinder.Api.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System.Threading.Tasks;
 
 namespace LocationFinder.Api.Controllers
 {
@@ -15,7 +11,7 @@ namespace LocationFinder.Api.Controllers
     [ApiController]
     public class GraphQLController : Controller
     {
-        private readonly NearmeDataContext  _db;
+        private readonly NearmeDataContext _db;
 
         public GraphQLController(NearmeDataContext db) => _db = db;
 

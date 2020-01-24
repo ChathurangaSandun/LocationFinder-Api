@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LocationFinder.Api.Models
 {
     [Table(name: "nearme.organizationdevice")]
-    public class OrganizationDevice: BaseEntity
+    public class OrganizationDevice : BaseEntity
     {
 
         [ForeignKey("Organization")]

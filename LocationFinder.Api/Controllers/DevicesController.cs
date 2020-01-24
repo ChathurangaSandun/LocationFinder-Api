@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LocationFinder.Api.DataModels;
+﻿
 using LocationFinder.Api.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
-
+using System.Threading.Tasks;
 namespace LocationFinder.Api.Controllers
 {
     [Route("api/[controller]")]
@@ -16,7 +11,7 @@ namespace LocationFinder.Api.Controllers
     {
         private readonly NearmeDataContext context;
         private readonly IConfiguration configuration;
-            
+
         public DevicesController(NearmeDataContext context, IConfiguration configuration)
         {
             this.context = context;
@@ -35,7 +30,7 @@ namespace LocationFinder.Api.Controllers
             {
                 DeviceId = deviceInformation.Id,
                 OrganizationId = int.Parse(org)
-            }) ;
+            });
             await this.context.SaveChangesAsync();
 
 

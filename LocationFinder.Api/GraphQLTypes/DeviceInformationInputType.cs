@@ -1,12 +1,8 @@
 ﻿using GraphQL.Types;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace LocationFinder.Api.GraphQLTypes
 {
-    public class DeviceInformationInputType: InputObjectGraphType
+    public class DeviceInformationInputType : InputObjectGraphType
     {
         public DeviceInformationInputType()
         {

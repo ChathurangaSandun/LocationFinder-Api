@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using GraphiQl;
+﻿using GraphiQl;
 using LocationFinder.Api.DataModels;
 using LocationFinder.Api.Models;
 using Microsoft.AspNetCore.Builder;
@@ -11,11 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Swagger;
-
 namespace LocationFinder.Api
 {
     public class Startup
@@ -33,7 +25,7 @@ namespace LocationFinder.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             var ConnectionString = Configuration.GetConnectionString("LocationDatabase");
 
-        
+
             //Entity Framework  
             services.AddDbContext<PaperGeneration_TESTContext>(options => options.UseSqlServer(ConnectionString));
             services.AddDbContext<NearmeDataContext>(options => options.UseSqlServer(ConnectionString));

@@ -3,10 +3,7 @@ using GraphQL.Types;
 using LocationFinder.Api.GraphQLTypes;
 using LocationFinder.Api.Models;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace LocationFinder.Api.GraphQLQuery
 {

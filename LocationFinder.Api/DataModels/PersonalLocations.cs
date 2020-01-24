@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace LocationFinder.Api.DataModels
+﻿namespace LocationFinder.Api.DataModels
 {
     public partial class PersonalLocations
     {
