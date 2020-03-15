@@ -1,0 +1,14 @@
+{
+  nearestLocations(latitude: 7.143200, longtitude: 79.86940, organizationId: 1) {
+    id
+    name
+    address
+    mobile
+    imageUri
+    pointList{
+      latitude
+      longtitude
+      type
+    }
+  }
+}

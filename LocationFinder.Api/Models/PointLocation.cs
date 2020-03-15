@@ -8,7 +8,10 @@ namespace LocationFinder.Api.Models
         //public Guid MarkGuid { get; set; }
         public float Latitude { get; set; }
         public float Longtitude { get; set; }
+        public string Type { get; set; }
 
+        [ForeignKey("Person")]
+        public long? PersonId { get; set; }
         public Person Person { get; set; }
     }
 }

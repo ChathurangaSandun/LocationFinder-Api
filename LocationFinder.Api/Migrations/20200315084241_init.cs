@@ -38,20 +38,6 @@ namespace LocationFinder.Api.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "nearme.pointlocation",
-                columns: table => new
-                {
-                    Id = table.Column<long>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Latitude = table.Column<float>(nullable: false),
-                    Longtitude = table.Column<float>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_nearme.pointlocation", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "nearme.organizationdevice",
                 columns: table => new
                 {
@@ -87,8 +73,7 @@ namespace LocationFinder.Api.Migrations
                     Name = table.Column<string>(nullable: true),
                     Mobile = table.Column<string>(nullable: true),
                     Address = table.Column<string>(nullable: true),
-                    ImageUri = table.Column<string>(nullable: true),
-                    PointLocatioId = table.Column<long>(nullable: false)
+                    ImageUri = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -99,12 +84,28 @@ namespace LocationFinder.Api.Migrations
                         principalTable: "nearme.organization",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "nearme.pointlocation",
+                columns: table => new
+                {
+                    Id = table.Column<long>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Latitude = table.Column<float>(nullable: false),
+                    Longtitude = table.Column<float>(nullable: false),
+                    Type = table.Column<string>(nullable: true),
+                    PersonId = table.Column<long>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_nearme.pointlocation", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_nearme.person_nearme.pointlocation_PointLocatioId",
-                        column: x => x.PointLocatioId,
-                        principalTable: "nearme.pointlocation",
+                        name: "FK_nearme.pointlocation_nearme.person_PersonId",
+                        column: x => x.PersonId,
+                        principalTable: "nearme.person",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -123,10 +124,9 @@ namespace LocationFinder.Api.Migrations
                 column: "OrganizationId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_nearme.person_PointLocatioId",
-                table: "nearme.person",
-                column: "PointLocatioId",
-                unique: true);
+                name: "IX_nearme.pointlocation_PersonId",
+                table: "nearme.pointlocation",
+                column: "PersonId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -135,16 +135,16 @@ namespace LocationFinder.Api.Migrations
                 name: "nearme.organizationdevice");
 
             migrationBuilder.DropTable(
-                name: "nearme.person");
+                name: "nearme.pointlocation");
 
             migrationBuilder.DropTable(
                 name: "nearme.deviceinformation");
 
             migrationBuilder.DropTable(
-                name: "nearme.organization");
+                name: "nearme.person");
 
             migrationBuilder.DropTable(
-                name: "nearme.pointlocation");
+                name: "nearme.organization");
         }
     }
 }

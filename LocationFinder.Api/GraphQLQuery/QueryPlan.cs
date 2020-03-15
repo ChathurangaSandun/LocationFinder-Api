@@ -20,7 +20,7 @@ namespace LocationFinder.Api.GraphQLQuery
                   var id = context.GetArgument<long>("id");
                   var organization = db.Organizations
                     .Include(a => a.Persons)
-                    .ThenInclude(p => p.PointLocation).ToList()
+                    //.ThenInclude(p => p.PointLocation).ToList()
                     .FirstOrDefault(i => i.Id == id);
                   return organization;
               });
@@ -29,8 +29,8 @@ namespace LocationFinder.Api.GraphQLQuery
               "Organizations",
               resolve: context =>
               {
-                  var organizations = db.Organizations.Include(a => a.Persons).ThenInclude(p => p.PointLocation);
-                  return organizations;
+                  var organizations = db.Organizations.Include(a => a.Persons);
+                  return  organizations;
               });
 
             Field<PersonType>(
@@ -41,7 +41,7 @@ namespace LocationFinder.Api.GraphQLQuery
               {
                   var id = context.GetArgument<long>("id");
                   var person = db.Persons
-                    .Include(a => a.PointLocation)
+                    //.Include(a => a.PointLocation)
                     .Include(b => b.Organization)
                     .FirstOrDefault(i => i.Id == id);
                   return person;
@@ -51,7 +51,7 @@ namespace LocationFinder.Api.GraphQLQuery
               "Persons",
               resolve: context =>
               {
-                  var organizations = db.Persons.Include(p => p.PointLocation).Include(b => b.Organization);
+                  var organizations = db.Persons.Include(b => b.Organization);
                   return organizations;
               });
 
@@ -68,17 +68,25 @@ namespace LocationFinder.Api.GraphQLQuery
                     var pointLong = context.GetArgument<double>("longtitude");
                     var orgId = context.GetArgument<long>("organizationId");
 
+                    // create coordinates
                     var coord = new GeoCoordinate(pointLat, pointLong);
 
-                    var list = db.Persons
-                            .Where(o => o.OrganizationId == orgId)
-                            .Select(x => new { locations = new GeoCoordinate { Latitude = x.PointLocation.Latitude, Longitude = x.PointLocation.Longtitude }, person = x })
-                            .OrderBy(x => x.locations.GetDistanceTo(coord))
-                            .Take(5)
-                            .Select(x => x.person).Include(y => y.PointLocation).Include(o => o.Organization)
-                            .AsEnumerable();
+                    var list = db.PointLocations
+                                .Select(x => new { locations = new GeoCoordinate { Latitude = x.Latitude, Longitude = x.Longtitude }, pointLocation = x })
+                                .OrderBy(x => x.locations.GetDistanceTo(coord))
+                                .Select(x => x.pointLocation).Include(y => y.Person)
+                                .Where(x => x.PersonId != null && x.Person.OrganizationId.Equals(orgId))
+                                .GroupBy(x => x.PersonId)
+                                .Select(y => y.Key)
+                                .Take(5);                            
 
-                    return list;
+                    var personList = db.Persons.Include(o => o.PointLocations).Include(o => o.Organization)
+                                        .Join(list,
+                                        person => person.Id,
+                                        ids => ids,
+                                        (person, ids) => person);
+
+                    return personList;
 
                 }
                 );

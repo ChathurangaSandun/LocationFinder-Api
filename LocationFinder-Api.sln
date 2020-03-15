@@ -4,6 +4,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{97318D3D-7BF2-4F98-BD33-0E0EB2CBC4DA}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\graphql query.txt = scripts\graphql query.txt
+		scripts\personlocations.sql = scripts\personlocations.sql
+		scripts\pointLocations.sql = scripts\pointLocations.sql
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{806AF541-CFD8-43FB-9796-6D72F5BD446A}"
 EndProject

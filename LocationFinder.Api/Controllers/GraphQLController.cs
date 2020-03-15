@@ -2,7 +2,9 @@
 using GraphQL.Types;
 using LocationFinder.Api.GraphQLQuery;
 using LocationFinder.Api.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using System.Threading.Tasks;
 
 namespace LocationFinder.Api.Controllers
@@ -34,7 +36,7 @@ namespace LocationFinder.Api.Controllers
 
             if (result.Errors?.Count > 0)
             {
-                return BadRequest();
+                return StatusCode(StatusCodes.Status500InternalServerError);
             }
 
             return Ok(result);
