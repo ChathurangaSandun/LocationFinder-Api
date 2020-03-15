@@ -76,9 +76,12 @@ namespace LocationFinder.Api.GraphQLQuery
                                 .OrderBy(x => x.locations.GetDistanceTo(coord))
                                 .Select(x => x.pointLocation).Include(y => y.Person)
                                 .Where(x => x.PersonId != null && x.Person.OrganizationId.Equals(orgId))
-                                .GroupBy(x => x.PersonId)
-                                .Select(y => y.Key)
-                                .Take(5);                            
+                                //.GroupBy(x => x.PersonId);
+                                .Select(y => y.PersonId)
+                                .Distinct()
+                                .Take(5);
+                                
+                                                              ;
 
                     var personList = db.Persons.Include(o => o.PointLocations).Include(o => o.Organization)
                                         .Join(list,
