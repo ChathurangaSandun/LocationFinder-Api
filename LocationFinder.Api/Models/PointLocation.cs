@@ -9,6 +9,7 @@ namespace LocationFinder.Api.Models
         public float Latitude { get; set; }
         public float Longtitude { get; set; }
         public string Type { get; set; }
+        public string Address { get; set; }
 
         [ForeignKey("Person")]
         public long? PersonId { get; set; }

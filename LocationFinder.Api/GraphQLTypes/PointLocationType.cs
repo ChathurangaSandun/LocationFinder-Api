@@ -12,6 +12,8 @@ namespace LocationFinder.Api.GraphQLTypes
             Field(x => x.Latitude).Description("The ID of the pointLocation");
             Field(x => x.Longtitude).Description("The ID of the pointLocation");
             Field(x => x.Type).Description("The type of the location");
+            Field(x => x.Address).Description("The type of the location");
+
 
         }
     }

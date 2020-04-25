@@ -15,7 +15,7 @@ namespace LocationFinder.Api.Models
         public long OrganizationId { get; set; }
         public string Name { get; set; }
         public string Mobile { get; set; }
-        public string Address { get; set; }
+        //public string Address { get; set; }
         public string ImageUri { get; set; }
         public Organization Organization { get; set; }
 

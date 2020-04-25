@@ -3,6 +3,7 @@ using GraphQL.Types;
 using LocationFinder.Api.GraphQLTypes;
 using LocationFinder.Api.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace LocationFinder.Api.GraphQLQuery
@@ -30,7 +31,7 @@ namespace LocationFinder.Api.GraphQLQuery
               resolve: context =>
               {
                   var organizations = db.Organizations.Include(a => a.Persons);
-                  return  organizations;
+                  return organizations;
               });
 
             Field<PersonType>(
@@ -79,36 +80,22 @@ namespace LocationFinder.Api.GraphQLQuery
                                 //.GroupBy(x => x.PersonId);
                                 .Select(y => y.PersonId)
                                 .Distinct()
-                                .Take(5);
-                                
-                                                              ;
+                                .Take(5).ToList();
 
-                    var personList = db.Persons.Include(o => o.PointLocations).Include(o => o.Organization)
-                                        .Join(list,
-                                        person => person.Id,
-                                        ids => ids,
-                                        (person, ids) => person);
+                    var personList = new List<Person>();
+
+                    foreach (var item in list)
+                    {
+                        var person = db.Persons.Include(o => o.PointLocations).FirstOrDefault(o => o.Id.Equals(item.Value));
+                        personList.Add(person);
+                    }
+
 
                     return personList;
 
                 }
                 );
-
-            //Field<DeviceInformationType>(
-            //     "createDeviceInformation",
-            //     arguments: new QueryArguments(
-            //       new QueryArgument<NonNullGraphType<DeviceInformationType>> { Name = "information" }
-            //     ),
-            //     resolve: context =>
-            //     {
-            //         var information = context.GetArgument<DeviceInformation>("information");
-            //         var a = db.Add(information);
-            //         db.SaveChangesAsync();
-            //         return a;
-            //     });
         }
-
-
     }
 }
 
